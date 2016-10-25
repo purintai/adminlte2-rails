@@ -1,4 +1,10 @@
 ## 0.0.7 (WIP)
+- Update HTML / JS / CSS to AdminLTE 2.3.7
+- Bumped 'bootstrap-sass' gem to 3.3.7 version
+- Adding stylesheets correctly for 'sass' or 'scss' engine into the 'application.scss' file
+- Fixed iCheck plugin css loading to use '@import url()'
+- DRYed generators inheriting from a BaseGenerator
+- Added 'font-awesome-rails' gem runtime dependency to DRY the .erb templates
 
 ## 0.0.6
 - Remove Bootstrap's files and add it as dependency
@@ -22,4 +28,3 @@
 - FIX:
   - Install Generator: Use stylesheet_engine when injecting data in file
   - Plugin Generator: Use stylesheet_engine when injecting data in file
-

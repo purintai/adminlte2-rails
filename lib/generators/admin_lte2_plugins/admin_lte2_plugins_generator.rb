@@ -1,9 +1,7 @@
-class AdminLte2PluginsGenerator < Rails::Generators::Base
+class AdminLte2PluginsGenerator < BaseGenerator
   source_root File.expand_path('../templates', __FILE__)
-  argument :plugin_name, type: :string
   class_option :stylesheet_engine
 
-  #
   def main
     begin
       send("install_#{plugin_name}")
@@ -89,9 +87,9 @@ class AdminLte2PluginsGenerator < Rails::Generators::Base
   end
 
   def install_icheck
-    add_plugin('iCheck', 'js')
+    add_plugin('iCheck', 'js', 'icheck')
 
-    inject_into_application_stylesheet('iCheck/square/blue')
+    inject_into_application_stylesheet('url("iCheck/square/blue.css")')
 
     plugin_directory = File.expand_path('../templates', __FILE__) + '/iCheck'
     %w{flat futurico line minimal polaris square}.each do |dir|
@@ -108,22 +106,11 @@ class AdminLte2PluginsGenerator < Rails::Generators::Base
 
   # ------------------------------ #
 
-  def inject_into_application_stylesheet(plugin)
-    stylesheet_extension = options[:stylesheet_engine] || 'css'
-    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", " *= require #{plugin}\n", before: ' *= require_self'
-  end
-
-  def inject_into_application_javascript(plugin, before: '//= require app')
-    inject_into_file 'app/assets/javascripts/application.js', "//= require #{plugin}\n", before: before
-  end
-
   def add_plugin(plugin_directory, type, plugin_file = nil)
     plugin_file ||= plugin_directory
     plugin_file_with_extension = "#{plugin_file}.#{type}"
 
-    stylesheet_extension = options[:stylesheet_engine] || 'css'
-
-    if type == 'css'
+    if %w(css sass scss).include?(type)
       inject_into_application_stylesheet(plugin_file)
       copy_file "#{plugin_directory}/#{plugin_file_with_extension}", "vendor/assets/stylesheets/#{plugin_file_with_extension}"
     else

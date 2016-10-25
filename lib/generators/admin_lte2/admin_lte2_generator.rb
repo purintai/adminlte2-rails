@@ -1,14 +1,15 @@
-class AdminLte2Generator < Rails::Generators::Base
+class AdminLte2Generator < BaseGenerator
   source_root File.expand_path('../templates', __FILE__)
   class_option :stylesheet_engine
 
   def main
     stylesheet_extension = options[:stylesheet_engine] || 'css'
 
-    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "@import \"AdminLTE/skins/skin-blue\";\n", after: ' */'
-    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "@import \"AdminLTE/AdminLTE\";\n", after: ' */'
-    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "@import \"bootstrap\";\n", after: ' */'
-    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "\n@import \"bootstrap-sprockets\";\n", after: ' */'
+    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "\n@import \"AdminLTE/skins/skin-blue\";", after: ' */'
+    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "\n@import \"AdminLTE/AdminLTE\";", after: ' */'
+    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "\n@import \"bootstrap\";", after: ' */'
+    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "\n@import \"bootstrap-sprockets\";", after: ' */'
+    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", "\n@import \"font-awesome\";", after: ' */'
 
     inject_into_file "app/assets/javascripts/application.js", "//= require bootstrap-sprockets\n", after: "//= require jquery\n"
     inject_into_application_javascript('app', before: '//= require_tree')
@@ -40,16 +41,4 @@ class AdminLte2Generator < Rails::Generators::Base
       "
     end
   end
-
-  private
-
-  def inject_into_application_stylesheet(file)
-    stylesheet_extension = options[:stylesheet_engine] || 'css'
-    inject_into_file "app/assets/stylesheets/application.#{stylesheet_extension}", " *= require #{file}\n", before: ' *= require_self'
-  end
-
-  def inject_into_application_javascript(file, before: '//= require app')
-    inject_into_file 'app/assets/javascripts/application.js', "//= require #{file}\n", before: before
-  end
-
 end
