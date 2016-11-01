@@ -1,4 +1,12 @@
-## 0.0.7 (WIP)
+## 0.0.8
+- Fix to create stylesheet_file 'application.###' if it doesn't exist.
+- Some ERB tags inserted where dynamic HTML generation should occure.
+- <head> and 'social_auth_links' separated into global partials.
+- <div id="modal-window"></div> inserted into the main layout as a placeholder for modals.
+- 'app/views/layouts/admin_lte_2.html.erb' is changed to 'app/views/login/login.html.erb' ready to be used in future 
+LoginController.
+
+## 0.0.7 
 - Update HTML / JS / CSS to AdminLTE 2.3.7
 - Bumped 'bootstrap-sass' gem to 3.3.7 version
 - Adding stylesheets correctly for 'sass' or 'scss' engine into the 'application.scss' file
